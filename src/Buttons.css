@@ -1,0 +1,36 @@
+#buttons{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+button{
+    height:65px;
+    width:75px;
+    position:relative;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #4d4d4d;
+    color:whitesmoke;
+    padding:0;
+    margin:0;
+    border:none;
+    outline:1px solid black;
+}
+#clear{
+    grid-column:span 2;
+    width:152px;
+    background-color: maroon;
+}
+#equals{
+    grid-row:span 2;
+    height:130px;
+    background-color: rgb(41, 41, 131);
+}
+#zero{
+    grid-column:span 2;
+    width:152px;
+}
+
+#divide,#multiply,#add,#subtract{
+    background-color: #5e5d5d;
+}

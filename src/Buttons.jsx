@@ -1,29 +1,78 @@
 import PropTypes from "prop-types";
+import * as math from 'mathjs'
+import "./Buttons.css" 
+import { useState } from "react";
 
-export function Buttons({ setFormula, setDisplay, formula }) {
+const ops = ['x','+','-','/']
+
+export function Buttons({ setFormula, setDisplay, formula,display }) {
+
+  const [reset,setReset] = useState(false);
+
   //TODO: Look for any missed edge cases
   const handleNumberInput = (e) => {
-    setFormula(formula + e.target.value);
+    if (reset) {
+      setFormula(e.target.value);
+      setDisplay(e.target.value);
+      setReset(false);
+    } else {
+      setFormula(formula + e.target.value);
+      if (ops.includes(display)) {
+        setDisplay(e.target.value);
+      } else {
+        if (display === '0') {
+          setDisplay(e.target.value);
+        } else {
+          setDisplay(display + e.target.value);
+        }
+      }
+    }
   };
 
-  //TODO: Account for multiple decimals in one number
   const handleDecimal = (e) => {
-    if (formula[formula.length - 1] != ".") {
+    if (!display.includes('.')) {
       setFormula(formula + e.target.value);
+      setDisplay(display + e.target.value);
     }
   };
   const handleClear = () => {
     setFormula("");
-    setDisplay("");
+    setDisplay("0");
   };
   //TODO: Find a way to convert the formula string into an operation
-  const handleEquals = () => {};
+  const handleEquals = () => {
+    setDisplay(math.evaluate(formula.replace('x','*')).toString())
+    setReset(true);
+  };
   //TODO: Find a way to handle double operator entries, always use the last operator provided unless it is a minus in which case it will make the next number a negative
-  const handleOperator = (e) => {};
+  const handleOperator = (e) => {
+    if(reset){
+      setFormula(display + e.target.value);
+      setDisplay(e.target.value)
+      setReset(false);
+    } else {
+      if (ops.includes(formula[formula.length - 2]) && ops.includes(formula[formula.length - 1])) {
+        if (e.target.value === '-') {
+          setFormula(formula.slice(0, -1) + e.target.value);
+        } else {
+          setFormula(formula.slice(0, -2) + e.target.value);
+        }
+      } else if (ops.includes(formula[formula.length - 1])) {
+        if (e.target.value === '-') {
+          setFormula(formula + e.target.value);
+        } else {
+          setFormula(formula.slice(0, -1) + e.target.value);
+        }
+      } else {
+        setFormula(formula + e.target.value);
+      }
+      setDisplay(e.target.value);
+    }
+  };
 
   return (
     <div id="buttons">
-      <button value="AC" id="clear" onClick={handleClear}>
+      <button value="AC" id="clear" onClick={handleClear} >
         AC
       </button>
       <button value="/" id="divide" onClick={handleOperator}>
@@ -90,4 +139,5 @@ Buttons.propTypes = {
   setFormula: PropTypes.func,
   setDisplay: PropTypes.func,
   formula: PropTypes.string,
+  display:PropTypes.string
 };

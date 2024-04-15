@@ -1,0 +1,9 @@
+#calculator{
+    border:2px solid black;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding:5px;
+    background:rgb(46, 44, 44);
+    width:320px;
+    position:relative;
+}

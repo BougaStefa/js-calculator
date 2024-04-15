@@ -1,0 +1,12 @@
+#display{
+    color:whitesmoke;
+    display: flex;
+    justify-content: flex-end;
+    height: 25px;
+}
+#formula{
+    color:orangered;
+    display:flex;
+    justify-content: flex-end;
+    height:25px;
+}

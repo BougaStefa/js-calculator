@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import "./Display.css";
 
 export function Display({ formula, display }) {
   return (

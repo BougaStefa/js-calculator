@@ -5,7 +5,7 @@ import "./App.css";
 
 function App() {
   const [formula, setFormula] = useState("");
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState("0");
 
   return (
     <div id="calculator">
@@ -14,6 +14,7 @@ function App() {
         formula={formula}
         setFormula={setFormula}
         setDisplay={setDisplay}
+        display={display}
       />
     </div>
   );
